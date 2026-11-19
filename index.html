@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Гальма — Уголки с Ари и Морти</title>
-<link rel="apple-touch-icon" href="logo.png">
-<link href="https://googleapis.com" rel="stylesheet">
+<link rel="apple-touch-icon" href="logo.webp">
+
 <style>
 *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#160e09 url('hall.png') no-repeat center/cover fixed;color:#f5e6d3;min-height:100dvh;padding:calc(8px + env(safe-area-inset-top)) 8px calc(8px + env(safe-area-inset-bottom))}
+body{margin:0;background:#160e09 url('hall.webp') no-repeat center/cover fixed;color:#f5e6d3;min-height:100dvh;padding:calc(8px + env(safe-area-inset-top)) 8px calc(8px + env(safe-area-inset-bottom))}
 .app-wrap{max-width:480px;margin:0 auto;width:100%}
 @media(min-width:768px){.app-wrap.hall-wide{max-width:860px}.tables-grid{grid-template-columns:repeat(6,1fr)!important}}
 .box{background:rgba(16,11,8,.9);border-radius:12px;padding:11px;border:1px solid rgba(212,175,55,.32);margin-bottom:8px;backdrop-filter:blur(6px)}
@@ -139,12 +139,12 @@ body.fs-mode #gameTopBar,body.fs-mode #gameChatBox{display:none!important}
     <div class="hdr">
       <div class="hdr-left">
         <button class="sec" style="padding:6px 10px;font-size:16px" onclick="toggleMenu(true)">☰</button>
-        <img src="logo.png" class="logo-img" alt="" onerror="this.style.display='none';$('logoFb').classList.remove('hidden')">
+        <img src="logo.webp" class="logo-img" alt="" onerror="this.style.display='none';$('logoFb').classList.remove('hidden')">
         <div id="logoFb" class="logo-fb hidden">👑</div>
         <span style="font-family:'Marck Script',cursive;font-size:25px;color:#f3c677">Гальма</span>
       </div>
       <div class="user-corner" onclick="handleCornerClick()">
-        <div id="mailBadge" class="mail-dot hidden">✉️</div>
+        <div id="mailBadge" class="mail-dot hidden" aria-label="Непрочитанные сообщения">✉</div>
         <div id="hdrAva" class="ava-sm ring-yellow">👑</div>
         <span id="hdrNick" style="font-size:10px;color:#f3c677;margin-top:2px;font-weight:700"></span>
       </div>
@@ -152,10 +152,7 @@ body.fs-mode #gameTopBar,body.fs-mode #gameChatBox{display:none!important}
 
     <!-- ВКЛАДКА 1: ИГРОВОЙ ЗАЛ -->
     <div id="tabHall">
-      <div style="display:flex;gap:6px;margin-bottom:7px">
-        <button style="flex:1" onclick="openCreate()">+ Создать стол</button>
-        <button class="sec" onclick="openCard('me')">Профиль</button>
-      </div>
+      <div class="hall-actions"><button style="width:100%" onclick="openCreate()">+ Создать стол</button></div>
       <div class="ticker" onclick="show('mLobbyChat')">
         <span id="tickTxt" style="font-size:12px;color:#ffe8c2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:74%">Общий чат зала...</span>
         <span style="font-size:11px;color:#f3c677;font-weight:700">Чат ↗</span>
@@ -315,12 +312,12 @@ body.fs-mode #gameTopBar,body.fs-mode #gameChatBox{display:none!important}
 const DAY14=12096e5,DAY2=1728e5,presets=new Array('👑','💎','🧭','🦉','🐎','⚓','🔥','🌙','🐉','🦊','🛡️','🎭');
 const boardThemes=new Array(
   {k:'th-classic',t:'Классическая',d:'Тёплый благородный орех и слоновая кость',img:'',c1:'#ebd5b3',c2:'#633b20'},
-  {k:'th-sea',t:'Морская',d:'Резной штурвал, ракушки и морская бирюза',img:'prev_sea.webp.png',c1:'#d9eef2',c2:'#175666'},
-  {k:'th-glam',t:'Гламурная',d:'Розовый перламутр, бордо и золото',img:'',c1:'#f7e4ec',c2:'#7a2952'}
+  {k:'th-sea',t:'Морская',d:'Резной штурвал, ракушки и морская бирюза',img:'prev_sea.webp',c1:'#d9eef2',c2:'#175666'},
+  {k:'th-glam',t:'Гламурная',d:'Розовый перламутр, бордо и золото',img:'board-glam-preview.webp',c1:'#f7e4ec',c2:'#7a2952'}
 );
 const defMe={id:'me',nick:'',name:'',city:'',reg:new Date().toLocaleDateString('ru-RU'),sex:'',year:'',avaT:'e',avaV:'👑',bTheme:'th-classic',hide:false,tNick:0,tAva:0,contacts:new Array('morty','anna'),pm:{morty:new Array({s:'Морти',t:'Привет! Жду тебя за столом!',ts:Date.now()})},unread:1,rat:{total:{r:25,w:4,l:2,d:1},m3x3:{r:30,w:2,l:1,d:0},m3x4:{r:15,w:1,l:1,d:1},tri:{r:25,w:1,l:0,d:0}},ch:{total:new Array({t:'Осенний Кубок',p:2}),m3x3:new Array({t:'Кубок 3×3',p:2}),m3x4:new Array(),tri:new Array()},tr:{total:{a:1,b:2,c:1},m3x3:{a:1,b:1,c:0},m3x4:{a:0,b:1,c:1},tri:{a:0,b:0,c:0}}};
 let me=JSON.parse(localStorage.getItem('g_full3'))||JSON.parse(JSON.stringify(defMe));
-if(!me.bTheme)me.bTheme='th-classic';if(!me.pm)me.pm={};
+if(!me.bTheme)me.bTheme='th-classic';if(!me.pm)me.pm={};if(!Array.isArray(me.contacts))me.contacts=[];me.contacts=[...new Set(me.contacts)].slice(0,10);
 
 const bots=new Array(
   {id:'morty',nick:'Морти',name:'Морти',city:'Москва',reg:'10.11.2026',sex:'Мужской',year:'1994',avaT:'e',avaV:'🧭',hide:false,rat:{total:{r:340,w:58,l:14,d:6},m3x3:{r:360,w:25,l:5,d:2},m3x4:{r:320,w:20,l:5,d:2},tri:{r:195,w:13,l:4,d:2}},ch:{total:new Array({t:'Гран-при Гальмы',p:1}),m3x3:new Array({t:'Мастерс 3×3',p:1}),m3x4:new Array(),tri:new Array()},tr:{total:{a:12,b:7,c:4},m3x3:{a:6,b:3,c:1},m3x4:new Array(),tri:new Array()}},
@@ -404,8 +401,6 @@ function drawHall(){
     const p=x.id?findP(x.id):null,g=p?getLeague(p.rat.total.r,'total').c:'ring-yellow';
     return `<div class="chat-row"><div class="ava-xs ${g}" onclick="${p?`openCard('${p.id}')`:''}">${avaH(p)}</div><div><b style="color:#f3c677">${x.s}:</b> ${x.t}</div></div>`;
   }).join('');
-  // Сортировка игрового зала — только порядок и визуальное выделение карточек.
-  // Сначала столы с игроками из более высокой лиги, затем по сумме рейтингов обоих мест.
   const leagueLevel=r=>r>=320?6:r>=250?5:r>=180?4:r>=120?3:r>=60?2:1;
   const tableRank=t=>{
     const p1=t.p1?findP(t.p1):null,p2=t.p2?findP(t.p2):null;
@@ -417,16 +412,17 @@ function drawHall(){
     const A=tableRank(a),B=tableRank(b);
     return B.level-A.level||B.sum-A.sum||B.best-A.best||a.id-b.id;
   });
-  const per=20,totP=Math.max(1,Math.ceil(sorted.length/per));if(page>totP)page=totP;
-  $('tGrid').innerHTML=sorted.slice((page-1)*per,page*per).map(t=>{
+  $('tGrid').innerHTML=sorted.map(t=>{
     const p1=t.p1?findP(t.p1):null,p2=t.p2?findP(t.p2):null;
     const r1=p1&&p1.rat&&p1.rat[t.m]?Number(p1.rat[t.m].r)||0:0;
     const r2=p2&&p2.rat&&p2.rat[t.m]?Number(p2.rat[t.m].r)||0:0;
     const g1=p1?getLeague(r1,t.m).c:'',g2=p2?getLeague(r2,t.m).c:'';
-    const rank=tableRank(t),rankClass=rank.level?' league-'+rank.level:'',rankLabel=['','III ЛИГА','II ЛИГА','I ЛИГА','СУПЕРЛИГА','ПРЕМЬЕР','ВЫСШАЯ ЛИГА'][rank.level]||'';
-    return `<div class="t-card${rankClass}" onclick="openPrev(${t.id})">${rankLabel?`<div class="table-league-tag">${rankLabel}</div>`:''}${t.sp.length?`<div class="eye">👁 ${t.sp.length}</div>`:''}<div style="font-size:10px;font-weight:700;color:#f3c677">${t.n}</div><div class="avas">${p1?`<div class="ava-xs ${g1}">${avaH(p1)}</div>`:`<div class="ava-empty">+</div>`}${p2?`<div class="ava-xs ${g2}">${avaH(p2)}</div>`:`<div class="ava-empty">+</div>`}</div><div style="font-size:9px;color:#d1bfa7">${p1&&p2?'Идет игра':'от '+t.min+' рейт.'}</div><div class="table-total-rating">Рейтинг стола: ${rank.sum}</div></div>`;
+    const rank=tableRank(t);
+    const tint={1:'rgba(211,169,93,.18)',2:'rgba(58,196,190,.22)',3:'rgba(83,142,231,.23)',4:'rgba(169,105,213,.24)',5:'rgba(77,193,112,.25)',6:'rgba(226,65,53,.27)'}[rank.level]||'rgba(211,169,93,.16)';
+    const player=(p,g)=>p?`<div class="table-player" onclick="event.stopPropagation();openCard('${p.id}')"><div class="ava-xs ${g}">${avaH(p)}</div><div class="table-nick" title="${p.nick}">${p.nick}${me.contacts.includes(p.id)?'<span class="contact-mark" title="В контактах">★</span>':''}</div></div>`:`<div class="table-player"><div class="ava-empty">+</div><div class="table-nick vacant">Свободно</div></div>`;
+    return `<div class="t-card league-${rank.level}" style="--league-mist:${tint}" onclick="openPrev(${t.id})"><div class="table-title">${t.n}</div><div class="table-players">${player(p1,g1)}<span class="versus">VS</span>${player(p2,g2)}</div>${t.sp.length?`<div class="eye">👁 ${t.sp.length}</div>`:''}</div>`;
   }).join('');
-  $('pagerBar').innerHTML=totP>1?`<button class="sec" onclick="page=Math.max(1,page-1);drawHall()">◀</button><span>Стр. ${page}/${totP}</span><button class="sec" onclick="page=Math.min(totP,page+1);drawHall()">▶</button>`:'';
+  $('pagerBar').innerHTML='';
 }
 function sendL(){const v=$('lInp').value.trim();if(!v)return;lMsgs.push({id:'me',s:me.nick,t:v});$('lInp').value='';drawHall()}
 function openCreate(){
@@ -454,9 +450,10 @@ function openPrev(id){
 function drawTop(){
   $('topSubTabs').innerHTML=new Array({k:'total',t:'Общий'},{k:'m3x3',t:'3×3'},{k:'m3x4',t:'3×4'},{k:'tri',t:'Треуг'}).map(x=>`<button class="sub-btn ${topMode===x.k?'active':''}" onclick="topMode='${x.k}';drawTop()">${x.t}</button>`).join('');
   const all=new Array(me,...bots).sort((a,b)=>Reflect.get(b.rat,topMode).r-Reflect.get(a.rat,topMode).r).slice(0,20);
-  $('top20Grid').innerHTML=all.map((p,i)=>{const rV=Reflect.get(p.rat,topMode).r,g=getLeague(rV,topMode).c;return `<div class="top-grid"><b>${i===0?'👑 1':i===1?'🥈 2':i===2?'🥉 3':i+1}</b><div class="ava-sm ${g}">${avaH(p)}</div><b style="color:#f3c677;overflow:hidden;text-overflow:ellipsis">${p.nick}</b><b>${rV}</b><div><button class="sec" style="padding:4px 6px" onclick="openCard('${p.id}')">🪪</button>${p.id!=='me'?` <button class="sec" style="padding:4px 6px" onclick="addContact('${p.id}')">➕</button>`:''}</div></div>`}).join('');
+  $('top20Grid').innerHTML=all.map((p,i)=>{const rV=Reflect.get(p.rat,topMode).r,g=getLeague(rV,topMode).c;return `<div class="top-grid"><b>${i===0?'👑 1':i===1?'🥈 2':i===2?'🥉 3':i+1}</b><div class="ava-sm ${g}">${avaH(p)}</div><b style="color:#f3c677;overflow:hidden;text-overflow:ellipsis">${p.nick}${me.contacts.includes(p.id)?'<span class="contact-mark" title="В контактах">★</span>':''}</b><b>${rV}</b><div><button class="sec" style="padding:4px 6px" onclick="openCard('${p.id}')">🪪</button>${p.id!=='me'?` <button class="sec" style="padding:4px 6px" onclick="addContact('${p.id}')">➕</button>`:''}</div></div>`}).join('');
 }
-function addContact(id){if(me.contacts.includes(id))return pop('Контакты','Уже в контактах.',false);me.contacts.push(id);saveM();pop('Готово','Добавлено в контакты!',false)}
+function addContact(id){if(me.contacts.includes(id))return pop('Контакты','Игрок уже в контактах.',false);if(me.contacts.length>=10)return pop('Лимит контактов','У вас уже 10 игроков в контактах. Удалите одного из списка контактов, чтобы добавить нового.',true);me.contacts.push(id);saveM();p1();drawHall();pop('Готово','Игрок добавлен в контакты.',false)}
+function removeContact(id){me.contacts=me.contacts.filter(x=>x!==id);saveM();p5();drawHall();pop('Контакты','Игрок удалён из контактов.',false)}
 function openCard(id){cur=findP(id)||me;dAva=null;dTheme=null;$('cHeader').innerText=cur.id==='me'?'Мой профиль':'Карточка игрока';$('tb5').classList.toggle('hidden',cur.id!=='me');show('mCard');setTab(1)}
 function closeCard(){hide('mCard');drawHall()}
 function setTab(n){sub='total';new Array(1,2,3,4,5).forEach(i=>{$('tb'+i).classList.toggle('active',i===n);$('pane'+i).classList.toggle('hidden',i!==n)});if(n===1)p1();if(n===2)p2();if(n===3)p3();if(n===4)p4();if(n===5)p5()}
@@ -464,7 +461,7 @@ function setSub(k,n){sub=k;if(n===2)p2();if(n===3)p3();if(n===4)p4()}
 function openBoardsModal(){
   const curTh=dTheme||me.bTheme;
   $('boardsList').innerHTML=boardThemes.map(b=>{
-    const pic=b.img?`<img src="${b.img}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid #d4af37;flex-shrink:0">`:`<div class="th-thumb"><div style="background:${b.c1}"></div><div style="background:${b.c2}"></div><div style="background:${b.c2}"></div><div style="background:${b.c1}"></div></div>`;
+    const pic=b.img?`<img src="${b.img}" style="width:84px;height:84px;object-fit:contain;background:#120a06;border-radius:8px;border:1px solid #d4af37;flex-shrink:0">`:`<div class="th-thumb"><div style="background:${b.c1}"></div><div style="background:${b.c2}"></div><div style="background:${b.c2}"></div><div style="background:${b.c1}"></div></div>`;
     return `<div class="th-card ${curTh===b.k?'active':''}" onclick="dTheme='${b.k}';hide('mBoards');p1()">${pic}<div><b style="color:#f3c677;font-size:14px">${b.t}</b><div style="font-size:11px;color:#d1bfa7;margin-top:3px">${b.d}</div></div></div>`;
   }).join('');
   show('mBoards');
@@ -524,7 +521,7 @@ function p2(){subs('sub2',2);const d=Reflect.get(cur.rat,sub);$('ratBox').innerH
 function togHide(){me.hide=!me.hide;saveM();p2()}
 function p3(){subs('sub3',3);const l=Reflect.get(cur.ch,sub)||new Array();$('champBox').innerHTML=l.length?l.map(x=>`<div class="box"><b>${x.t}</b> — ${x.p} место</div>`).join(''):'<div style="text-align:center;color:#d1bfa7">Нет результатов</div>'}
 function p4(){subs('sub4',4);const t=Reflect.get(cur.tr,sub)||{a:0,b:0,c:0};$('tourBox').innerHTML=`<div class="box">🥇<br>1 мест<br><b>${t.a}</b></div><div class="box">🥈<br>2 мест<br><b>${t.b}</b></div><div class="box">🥉<br>3 мест<br><b>${t.c}</b></div>`}
-function p5(){$('contactsBox').innerHTML=me.contacts.map(cid=>{const p=findP(cid);return p?`<div class="box" style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:7px"><div class="ava-xs ${getLeague(p.rat.total.r,'total').c}">${avaH(p)}</div><b>${p.nick}</b></div><div><button class="sec" onclick="openCard('${p.id}')">🪪</button> <button class="sec" onclick="openPM('${p.id}','${p.nick}')">✉️</button></div></div>`:''}).join('')}
+function p5(){$('contactsBox').innerHTML=`<div style="font-size:12px;color:#d1bfa7;margin-bottom:8px">${me.contacts.length} из 10 контактов. Чтобы добавить нового игрока, сначала удалите кого-нибудь из списка.</div>`+me.contacts.map(cid=>{const p=findP(cid);return p?`<div class="box contact-row"><div style="display:flex;align-items:center;gap:8px;min-width:0"><div class="ava-xs ${getLeague(p.rat.total.r,'total').c}">${avaH(p)}</div><b style="overflow-wrap:anywhere">${p.nick} <span class="contact-mark">★</span></b></div><div class="contact-actions"><button class="sec" onclick="openCard('${p.id}')">🪪</button><button class="sec" onclick="openPM('${p.id}','${p.nick}')">✉️</button><button class="sec remove-contact" onclick="removeContact('${p.id}')">Удалить</button></div></div>`:''}).join('')||'<div style="text-align:center;color:#d1bfa7">Пока нет контактов</div>'}
 
 function openPM(pid,nick){
   pmPeerId=pid;$('pmH').innerText='Чат: '+nick;
@@ -665,10 +662,11 @@ function drawBoard(){
   const g=$('bGrid');g.innerHTML='';
   for(let vr=0;vr<8;vr++)for(let vc=0;vc<8;vc++){
     const r=vSide===1?vr:7-vr,c=vSide===1?vc:7-vc,val=brd.at(r).at(c);
-    const cl=document.createElement('div');cl.className='cell'+((r+c)%2===1?' dk':'')+(hints.includes(r+','+c)?' hint':'');
+    const textureTurn=(r*5+c*3+(r%2?2:0))%4;
+    const cl=document.createElement('div');cl.className='cell'+((r+c)%2===1?' dk':'')+(me.bTheme==='th-glam'?' tex-'+textureTurn:'')+(hints.includes(r+','+c)?' hint':'');
     if(val!==0){
-      const img=document.createElement('img');img.src=val===1?'white.png':'green.png';
-      img.className='p-img'+(sel&&sel.r===r&&sel.c===c?' sel':'');
+      const img=document.createElement('img');img.src=(me.bTheme==='th-glam')?(val===1?'piece-pearl.png':'piece-pink.png'):(val===1?'white.webp':'green.webp');
+      img.className='p-img'+(me.bTheme==='th-glam'?' glam-piece':'')+(sel&&sel.r===r&&sel.c===c?' sel':'');
       img.onerror=()=>{img.style.display='none';const fb=document.createElement('div');fb.className='p-fb '+(val===1?'w':'b')+(sel&&sel.r===r&&sel.c===c?' sel':'');cl.appendChild(fb)};
       cl.appendChild(img);
     }
@@ -796,6 +794,47 @@ function quitT(){
 function sendT(){const v=$('tInp').value.trim();if(!v)return;tMsgs.push({s:me.nick,t:v,h:role==='spectator'&&$('spChk').checked});$('tInp').value='';drawTChat()}
 function drawTChat(){const v=role==='player'?tMsgs.filter(x=>!x.h):tMsgs;$('tLog').innerHTML=v.map(x=>`<div><b>${x.s}${x.h?' [Зрителям]':''}:</b> ${x.t}</div>`).join('')}
 </script>
+
+<style id="galma-responsive-final">
+/* Compact hall: prioritize visible tables and player photos */
+body{padding:calc(5px + env(safe-area-inset-top)) 6px calc(8px + env(safe-area-inset-bottom));background:#100904 url('hall.webp') center top/cover fixed no-repeat}
+.app-wrap{max-width:none!important;width:100%;margin:0 auto}
+.hdr{min-height:0!important;padding:5px 9px!important;margin-bottom:5px!important;border-radius:13px!important}
+.hdr-left{gap:8px!important}.hdr-left>button.sec{width:38px!important;height:38px!important;font-size:18px!important;padding:4px!important}
+.logo-img{width:43px!important;height:43px!important}.hdr-left>span{font-size:clamp(22px,3vw,34px)!important}
+.user-corner{min-width:42px!important}.ava-sm{width:42px!important;height:42px!important}.user-corner #hdrNick{font-size:9px!important;margin-top:0!important}
+.mail-dot{top:-5px!important;right:-7px!important;width:22px;height:22px;display:flex;align-items:center;justify-content:center;padding:0!important;border-radius:50%!important;background:#211309!important;color:#ffe0a0!important;border:1px solid #d9a64f!important;font-size:14px!important;box-shadow:0 1px 5px #000}
+.mail-dot.hidden{display:none!important}
+.hall-actions{margin:0 0 5px!important}.hall-actions button{min-height:38px!important;padding:7px 10px!important;font-size:15px!important;border-radius:10px!important}
+.ticker{min-height:34px!important;padding:5px 9px!important;margin-bottom:6px!important;border-radius:9px!important}
+.ticker #tickTxt{font-size:11px!important}.ticker span:last-child{font-size:11px!important}
+.tables-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px!important;align-items:stretch}
+.t-card{position:relative;isolation:isolate;min-width:0;min-height:0!important;height:auto;padding:7px 4px 6px!important;border-radius:11px!important;overflow:hidden;background:linear-gradient(180deg,rgba(13,8,5,.88),rgba(8,5,3,.96)),url('table-floor.webp') center/cover!important;border:1px solid rgba(204,150,76,.72)!important;box-shadow:0 2px 7px rgba(0,0,0,.65)!important}
+.t-card:before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--league-mist,rgba(210,170,100,.15));mix-blend-mode:screen;opacity:.88}
+.t-card:after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at center,var(--league-mist,rgba(210,170,100,.16)),transparent 76%);filter:blur(8px)}
+.t-card .table-title{font-size:clamp(10px,2.4vw,15px)!important;font-weight:800;color:#f5ca79!important;line-height:1.1;margin:0 0 5px!important;text-shadow:0 1px 3px #000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.table-players{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:start;gap:2px}
+.table-player{display:flex;min-width:0;flex-direction:column;align-items:center;gap:2px}
+.table-player .ava-xs,.table-player .ava-empty{width:clamp(38px,7vw,62px)!important;height:clamp(38px,7vw,62px)!important;border-radius:50%;font-size:clamp(17px,3vw,25px)!important;flex-shrink:0}
+.table-player .ava-xs{border-width:2px!important;box-shadow:0 0 7px rgba(0,0,0,.8)!important}
+.table-player .ava-xs img{width:100%;height:100%;object-fit:cover}
+.table-player .ava-empty{border:1px dashed #d5a34f!important;background:rgba(0,0,0,.45);color:#edbd67}
+.table-nick{width:100%;max-width:100%;font-size:clamp(9px,1.7vw,12px);font-weight:700;color:#f7e4c5;line-height:1.1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 3px #000}
+.table-nick.vacant{color:#c6a16b;font-weight:500}
+.versus{font-size:9px;color:#f4c675;font-weight:800;align-self:center;padding-top:12px;text-shadow:0 1px 3px #000}
+.t-card .eye{top:4px!important;right:4px!important;font-size:9px!important;padding:1px 4px!important;border-radius:7px!important;z-index:2}
+.contact-mark{display:inline-block;color:#ffd66d;font-size:.88em;margin-left:3px;text-shadow:0 0 4px rgba(255,203,87,.4)}
+#pagerBar{margin:8px 0 14px!important}
+.contact-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px!important;margin-bottom:6px!important}
+.contact-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}.contact-actions button{padding:5px 7px!important;font-size:11px!important}.remove-contact{color:#ffc0a9!important}
+.th-card img{object-fit:contain!important}
+@media(min-width:520px){.tables-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:850px){.app-wrap.hall-wide{max-width:1500px!important}.tables-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:1200px){.tables-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:390px){.tables-grid{gap:5px!important}.t-card{padding:6px 3px 5px!important}.table-player .ava-xs,.table-player .ava-empty{width:39px!important;height:39px!important}.table-nick{font-size:9px}}
+@media(min-width:768px){.hdr{padding:5px 12px!important}.ticker{margin-bottom:7px!important}.tables-grid{gap:7px!important}}
+</style>
+
 </body>
 </html>
 
@@ -821,7 +860,7 @@ body{padding:calc(10px + env(safe-area-inset-top)) 10px calc(18px + env(safe-are
 .ticker #tickTxt{font-size:clamp(13px,2.4vw,20px)!important;max-width:78%!important}
 .ticker span:last-child{font-size:clamp(13px,2.2vw,19px)!important}
 .tables-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.t-card{min-width:0;min-height:174px;padding:13px 8px 12px;border-radius:20px;border:1.5px solid #d69b4b;background:linear-gradient(180deg,rgba(12,7,4,.2),rgba(8,5,3,.78)),url('table-floor.png') center/cover;box-shadow:0 5px 15px rgba(0,0,0,.65),inset 0 0 0 2px rgba(255,209,127,.16),inset 0 1px 0 #ffe4ad;overflow:hidden}
+.t-card{min-width:0;min-height:174px;padding:13px 8px 12px;border-radius:20px;border:1.5px solid #d69b4b;background:linear-gradient(180deg,rgba(12,7,4,.2),rgba(8,5,3,.78)),url('table-floor.webp') center/cover;box-shadow:0 5px 15px rgba(0,0,0,.65),inset 0 0 0 2px rgba(255,209,127,.16),inset 0 1px 0 #ffe4ad;overflow:hidden}
 .t-card:before{content:'';position:absolute;inset:4px;border:1px solid rgba(239,184,91,.36);border-radius:15px;pointer-events:none}
 .t-card>div:first-of-type{position:relative;font-size:clamp(13px,2.5vw,22px)!important;color:#f5c675!important;text-shadow:0 2px 5px #000;margin:2px 0 10px}
 .t-card .avas{position:relative;align-items:center;gap:clamp(8px,2vw,18px);margin:8px 0 10px}
@@ -859,3 +898,30 @@ input,select,textarea{border-radius:11px;border:1px solid rgba(210,157,83,.5);ba
 #splashScreen>img{z-index:0}
 @media(max-width:390px){.t-card{padding-top:27px}.t-card .table-league-tag{font-size:7px;left:6px;top:6px}.t-card .table-total-rating{font-size:9px}}
 </style>
+
+
+<style id="galma-board-assets-and-depth">
+#splashScreen{background:#0d0805!important}
+#splashScreen>img{object-fit:contain!important;object-position:center center!important;width:100%!important;height:100%!important}
+.board-wrap.th-glam{position:relative!important;isolation:isolate!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important;--c-l:#f7e4ec;--c-d:#7a2952}
+.board-wrap.th-glam .grid{position:absolute!important;inset:5.263% 5.821% 5.981% 5.502%!important;width:auto!important;height:auto!important;border:0!important;border-radius:0!important;z-index:1!important;overflow:visible!important;gap:0!important}
+.board-wrap.th-glam .cell{box-sizing:border-box!important;min-width:0!important;min-height:0!important;overflow:visible!important;border:0!important;border-radius:0!important;background-color:#e8c9a3!important;background-image:url('board-cell-light-0.webp')!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important}
+.board-wrap.th-glam .cell.dk{background-color:#3b1d0e!important;background-image:url('board-cell-dark-0.webp')!important}
+.board-wrap.th-glam .cell.tex-1{background-image:url('board-cell-light-1.webp')!important}
+.board-wrap.th-glam .cell.dk.tex-1{background-image:url('board-cell-dark-1.webp')!important}
+.board-wrap.th-glam .cell.tex-2{background-image:url('board-cell-light-2.webp')!important}
+.board-wrap.th-glam .cell.dk.tex-2{background-image:url('board-cell-dark-2.webp')!important}
+.board-wrap.th-glam .cell.tex-3{background-image:url('board-cell-light-3.webp')!important}
+.board-wrap.th-glam .cell.dk.tex-3{background-image:url('board-cell-dark-3.webp')!important}
+.board-wrap.th-glam:after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:url('board-frame.webp') center/100% 100% no-repeat}
+.board-wrap.th-glam #ranksCol{left:5.8%!important;top:7%!important;bottom:7%!important;z-index:6!important}
+.board-wrap.th-glam #filesRow{left:7%!important;right:7%!important;bottom:5.5%!important;z-index:6!important}
+.p-img.glam-piece{width:96%!important;height:96%!important;max-width:none!important;max-height:none!important;object-fit:contain!important;border-radius:0!important;overflow:visible!important;position:relative!important;z-index:4!important;transform:translateY(-1.5px);filter:drop-shadow(0 5px 4px rgba(12,5,1,.72)) drop-shadow(0 1.5px 1.2px rgba(22,8,2,.62)) drop-shadow(0 0 .7px rgba(67,29,8,.72))}
+.p-img.glam-piece.sel{filter:drop-shadow(0 5px 4px rgba(12,5,1,.72)) drop-shadow(0 1.5px 1.2px rgba(22,8,2,.62)) drop-shadow(0 0 2px rgba(255,215,0,.7))}
+@media(max-width:520px){.board-wrap.th-glam{width:100%;max-width:100%}}
+body{background:#100904 url('hall.webp') center top/cover fixed no-repeat!important}
+.tables-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+@media(min-width:520px){.tables-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(min-width:850px){.tables-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+</style>
+
